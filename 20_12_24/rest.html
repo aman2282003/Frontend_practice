@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+</html>
+<script>
+
+function sumNumbers() {
+  const numbers = [];
+  let input;
+
+  while (true) {
+    input = prompt("Enter a number (or type 'done' to finish):");
+
+    // Break the loop if the user types 'done'
+    if (input === "done") {
+      break;
+    }
+
+    // Try to parse the input as a number
+    const num = parseFloat(input);
+
+    // Check if it's a valid number
+    if (!isNaN(num)) {
+      numbers.push(num);
+    } else {
+      alert("Please enter a valid number.");
+    }
+  }
+
+  // Calculate and return the sum using rest parameters
+  return sum(...numbers);
+}
+
+function sum(...args) {
+  return args.reduce((total, current) => total + current, 0);
+}
+
+// Example usage:
+const total = sumNumbers();
+console.log(`The total sum is: ${total}`);
+</script>
