@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+
+<script>
+  function calculatePrice(price, discount) {
+    if (isNaN(price) || isNaN(discount)) {
+      return "Not a valid price or discount";
+    } else {
+      return price - price * (discount / 100);
+    }
+  }
+  pri = prompt(parseInt("Enter the price"));
+  dis = prompt(parseInt("Enter discount percentage"));
+
+  console.log(calculatePrice(pri, dis || 10));
+</script>
