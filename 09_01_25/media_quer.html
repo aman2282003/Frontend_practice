@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .main {
+        background-color: red;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      .main > div {
+        background-color: teal;
+        margin: 10px;
+
+        height: 100px;
+      }
+
+
+      @media screen and (max-width: 1024px) {
+        .main {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+            @media screen and (max-width: 768px) {
+        .main {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+    </div>
+  </body>
+</html>
