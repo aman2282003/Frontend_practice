@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      div {
+        height: 300px;
+        width: 300px;
+        border: 1px solid red;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="text" placeholder="Enter color" id="color" />
+    <input type="text" placeholder="Enter text" id="text" />
+    <button id="changeColorButton">Change background color</button>
+    <button id="updateTextButton">Update Text</button>
+    <div id="contentDiv">This is a div which contains some random text.</div>
+  </body>
+
+
+
+    <script>
+      document.getElementById('changeColorButton').addEventListener('click', function() {
+        const colorInput = document.getElementById('color').value;
+        const div = document.getElementById('contentDiv');
+        
+        if (/^#[0-9A-F]{6}$/i.test(colorInput) || /^[a-zA-Z]+$/.test(colorInput)) {
+          div.style.backgroundColor = colorInput;
+        } else {
+          alert('Invalid color name!');
+        }
+      });
+
+      document.getElementById('updateTextButton').addEventListener('click', function() {
+        const textInput = document.getElementById('text').value;
+        const div = document.getElementById('contentDiv');
+        
+        if (textInput.trim() !== '') {
+          div.textContent = textInput;
+        } else {
+          alert('Please enter some text!');
+        }
+      });
+    </script>
+</html>
