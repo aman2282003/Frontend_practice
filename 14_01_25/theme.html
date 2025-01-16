@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Theme Selector</title>
+    <style id="theme-styles">
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        transition: background-color 0.3s, color 0.3s;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Theme Selector</h1>
+    <label for="theme">Choose a theme:</label>
+    <select id="theme" onchange="changeTheme()">
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+      <option value="blue">Blue</option>
+    </select>
+
+    <script>
+      function changeTheme() {
+        const selectedTheme = document.getElementById("theme").value;
+        applyTheme(selectedTheme);
+        sessionStorage.setItem("theme", selectedTheme);
+      }
+
+      function applyTheme(theme) {
+        const themeStyles = document.getElementById("theme-styles");
+        switch (theme) {
+          case "dark":
+            themeStyles.innerHTML = `
+                        body {
+                            background-color: #333;
+                            color: #fff;
+                        }
+                    `;
+            break;
+          case "blue":
+            themeStyles.innerHTML = `
+                        body {
+                            background-color: #87ceeb;
+                            color: #fff;
+                        }
+                    `;
+            break;
+          default:
+            themeStyles.innerHTML = `
+                        body {
+                            background-color: #fff;
+                            color: #000;
+                        }
+                    `;
+            break;
+        }
+      }
+    </script>
+  </body>
+</html>
