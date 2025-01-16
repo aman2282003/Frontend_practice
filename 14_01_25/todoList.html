@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Todo List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 5px;
+            transition: background-color 0.3s;
+        }
+        li.completed {
+            background-color: #d4edda;
+            text-decoration: line-through;
+        }
+        button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Enhanced Todo List</h1>
+    <input type="text" id="taskInput" placeholder="Add a new task...">
+    <input type="text" id="searchInput" placeholder="Search tasks...">
+    <ul id="taskList"></ul>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            loadTasks();
+
+            document.getElementById('taskInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addTask();
+                }
+            });
+
+            document.getElementById('searchInput').addEventListener('input', searchTasks);
+        });
+
+        function loadTasks() {
+            const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            tasks.forEach(task => addTaskToDOM(task));
+        }
+
+        function saveTasks(tasks) {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        function addTask() {
+            const taskText = document.getElementById('taskInput').value.trim();
+            if (taskText) {
+                const task = {
+                    id: Date.now(),
+                    text: taskText,
+                    completed: false
+                };
+                addTaskToDOM(task);
+                const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+                tasks.push(task);
+                saveTasks(tasks);
+                document.getElementById('taskInput').value = '';
+            } else {
+                alert('Please enter a task.');
+            }
+        }
+
+        function addTaskToDOM(task) {
+            const li = document.createElement('li');
+            li.setAttribute('data-id', task.id);
+            li.className = task.completed ? 'completed' : '';
+            li.innerHTML = `
+                <span onclick="toggleTask(${task.id})">${task.text}</span>
+                <button onclick="removeTask(${task.id})">Remove</button>
+            `;
+            document.getElementById('taskList').appendChild(li);
+        }
+
+        function toggleTask(taskId) {
+            const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            const taskIndex = tasks.findIndex(task => task.id === taskId);
+            tasks[taskIndex].completed = !tasks[taskIndex].completed;
+            saveTasks(tasks);
+            const li = document.querySelector(`li[data-id='${taskId}']`);
+            li.classList.toggle('completed');
+        }
+
+        function removeTask(taskId) {
+            let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            tasks = tasks.filter(task => task.id !== taskId);
+            saveTasks(tasks);
+            const li = document.querySelector(`li[data-id='${taskId}']`);
+            li.remove();
+        }
+
+        function searchTasks() {
+            const searchText = document.getElementById('searchInput').value.toLowerCase();
+            const tasks = document.querySelectorAll('#taskList li');
+            tasks.forEach(task => {
+                const taskText = task.textContent.toLowerCase();
+                if (taskText.includes(searchText)) {
+                    task.style.display = '';
+                } else {
+                    task.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
