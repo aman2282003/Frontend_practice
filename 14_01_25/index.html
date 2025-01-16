@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 10px;
+        }
+        button {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Notes App</h1>
+    <textarea id="notes" placeholder="Enter your notes here..."></textarea>
+    <br>
+    <button onclick="saveNotes()">Save Notes</button>
+    <button onclick="loadNotes()">Load Notes</button>
+    <button onclick="clearNotes()">Clear Notes</button>
+
+    <script>
+        // Load notes on page load
+        document.addEventListener("DOMContentLoaded", loadNotes);
+
+        function saveNotes() {
+            const notes = document.getElementById('notes').value.trim();
+            if (notes) {
+                localStorage.setItem('notes', notes);
+                alert('Notes saved successfully!');
+            } else {
+                alert('Please enter some notes before saving.');
+            }
+        }
+
+        function loadNotes() {
+            const savedNotes = localStorage.getItem('notes');
+            if (savedNotes !== null) {
+                document.getElementById('notes').value = savedNotes;
+            } else {
+                document.getElementById('notes').value = '';
+            }
+        }
+
+        function clearNotes() {
+            localStorage.removeItem('notes');
+            document.getElementById('notes').value = '';
+            alert('Notes cleared successfully!');
+        }
+    </script>
+</body>
+</html>
